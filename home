@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Eficiência do Escritório de Investimento</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #0d1b2a;
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .result {
+      margin-top: 30px;
+      background: #eef2f7;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .result p {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Calculadora de Eficiência do Escritório de Investimento</h1>
+  </header>
+  <div class="container">
+    <label for="investimento">Investimento mensal (R$):</label>
+    <input type="number" id="investimento" placeholder="Digite o valor">
+
+    <label for="leads">Leads gerados por mês:</label>
+    <input type="number" id="leads" placeholder="Digite o valor">
+
+    <label for="agendas">Agendas qualificadas geradas no mês:</label>
+    <input type="number" id="agendas" placeholder="Digite o valor">
+
+    <div class="result">
+      <p><strong>Custo por lead:</strong> R$ <span id="custoLead">0,00</span></p>
+      <p><strong>Custo por agenda:</strong> R$ <span id="custoAgenda">0,00</span></p>
+      <p><strong>Ratio de leads por agenda:</strong> <span id="ratio">0</span></p>
+    </div>
+  </div>
+
+  <script>
+    const investimento = document.getElementById('investimento');
+    const leads = document.getElementById('leads');
+    const agendas = document.getElementById('agendas');
+    const custoLead = document.getElementById('custoLead');
+    const custoAgenda = document.getElementById('custoAgenda');
+    const ratio = document.getElementById('ratio');
+
+    function formatCurrency(value) {
+      return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    function calcular() {
+      const invest = parseFloat(investimento.value) || 0;
+      const totalLeads = parseFloat(leads.value) || 0;
+      const totalAgendas = parseFloat(agendas.value) || 0;
+
+      const calcCustoLead = totalLeads ? invest / totalLeads : 0;
+      const calcCustoAgenda = totalAgendas ? invest / totalAgendas : 0;
+      const calcRatio = totalAgendas ? totalLeads / totalAgendas : 0;
+
+      custoLead.textContent = formatCurrency(calcCustoLead);
+      custoAgenda.textContent = formatCurrency(calcCustoAgenda);
+      ratio.textContent = calcRatio.toFixed(2);
+    }
+
+    investimento.addEventListener('input', calcular);
+    leads.addEventListener('input', calcular);
+    agendas.addEventListener('input', calcular);
+  </script>
+</body>
+</html>
+
